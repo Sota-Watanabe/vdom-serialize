@@ -1,5 +1,5 @@
 {
-  "name": "serialize-vdom",
+  "name": "vdom-serialize",
   "version": "0.0.0",
   "description": "Serializes and deserializes virtual DOM trees",
   "main": "index.js",
