@@ -1,9 +1,8 @@
 var VNode = require('virtual-dom/vnode/vnode');
 var VPatch = require('virtual-dom/vnode/vpatch');
 var VText = require('virtual-dom/vnode/vtext');
-var _ = require('lodash');
 
-module.exports.serialize = function(obj){
+module.exports.serializePatches = function(obj){
 
     obj = iterate(obj)
 
@@ -11,7 +10,7 @@ module.exports.serialize = function(obj){
     return obj;
 };
 
-module.exports.deserialize = function(obj){
+module.exports.deserializePatches = function(obj){
 
     for ( prop in obj ){
         obj[prop] = CreateNode(obj[prop]);
@@ -40,7 +39,7 @@ function CreateNode(obj){
             return node;
         }
     }
-    else if (_.isArray(obj)){
+    else if (Array.isArray(obj)){
         var arr = [];
         for ( var i in obj ){
             arr.push(CreateNode(obj[i]))
@@ -52,7 +51,7 @@ function CreateNode(obj){
 
 function iterate(obj){
     for ( prop in obj ){
-        if (_.isArray(obj[prop])){
+        if (Array.isArray(obj[prop])){
             obj[prop] = iterate(obj[prop])
         }
         else{

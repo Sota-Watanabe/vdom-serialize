@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/Zharktas/serialize-vdom",
   "dependencies": {
-    "lodash": "^3.10.1",
     "virtual-dom": "^2.1.1"
   }
 }
