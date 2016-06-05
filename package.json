@@ -1,5 +1,5 @@
 {
-  "name": "vdom-serialize",
+  "name": "@zharktas/vdom-serialize",
   "version": "1.0.0",
   "description": "Serializes and deserializes patch objects of virtual-dom",
   "main": "index.js",
