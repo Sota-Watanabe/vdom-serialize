@@ -4,25 +4,25 @@ var VText = require('virtual-dom/vnode/vtext');
 
 module.exports.serializePatches = function(obj){
 
-    obj = iterate(obj)
-
-
+    obj = iterate(obj);
     return obj;
 };
 
 module.exports.deserializePatches = function(obj){
 
-    for ( prop in obj ){
-        obj[prop] = CreateNode(obj[prop]);
+    for ( var prop in obj ){
+        if ( obj.hasOwnProperty(prop)) {
+            obj[prop] = createNode(obj[prop]);
+        }
     }
     return obj;
 };
 
-function CreateNode(obj){
+function createNode(obj){
     var node = '';
     if ( obj['#type']) {
         if (obj['#type'] == 'VirtualPatch') {
-            obj.patch = CreateNode(obj.patch)
+            obj.patch = createNode(obj.patch);
             node = new VPatch(obj.type, obj.vNode, obj.patch);
             return node;
         }
@@ -32,8 +32,10 @@ function CreateNode(obj){
         }
         else if (obj['#type'] == 'VirtualNode') {
             var children = [];
-            for (child in obj.children) {
-                children.push(CreateNode(obj.children[child]))
+            for (var child in obj.children) {
+                if ( obj.children.hasOwnProperty(child)) {
+                    children.push(createNode(obj.children[child]))
+                }
             }
             node = new VNode(obj.tagName, obj.properties, children);
             return node;
@@ -42,7 +44,9 @@ function CreateNode(obj){
     else if (Array.isArray(obj)){
         var arr = [];
         for ( var i in obj ){
-            arr.push(CreateNode(obj[i]))
+            if ( obj.hasOwnProperty(i)) {
+                arr.push(createNode(obj[i]))
+            }
         }
         obj = arr;
     }
@@ -50,18 +54,20 @@ function CreateNode(obj){
 }
 
 function iterate(obj){
-    for ( prop in obj ){
-        if (Array.isArray(obj[prop])){
-            obj[prop] = iterate(obj[prop])
-        }
-        else{
-            if (obj[prop] && obj[prop].constructor && (
-                obj[prop].constructor.name == 'VirtualNode' ||
-                obj[prop].constructor.name == 'VirtualPatch' ||
-                obj[prop].constructor.name == 'VirtualText')){
-                console.log("found node: " + obj[prop].constructor.name)
-                obj[prop]['#type'] = obj[prop].constructor.name;
+    for (var prop in obj ){
+        if ( obj.hasOwnProperty(prop)) {
+            if (Array.isArray(obj[prop])) {
                 obj[prop] = iterate(obj[prop])
+            }
+            else {
+                if (obj[prop] && obj[prop].constructor && (
+                    obj[prop].constructor.name == 'VirtualNode' ||
+                    obj[prop].constructor.name == 'VirtualPatch' ||
+                    obj[prop].constructor.name == 'VirtualText')) {
+                    console.log("found node: " + obj[prop].constructor.name);
+                    obj[prop]['#type'] = obj[prop].constructor.name;
+                    obj[prop] = iterate(obj[prop])
+                }
             }
         }
     }
