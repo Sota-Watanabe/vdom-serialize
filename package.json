@@ -1,14 +1,14 @@
 {
   "name": "vdom-serialize",
-  "version": "0.0.0",
-  "description": "Serializes and deserializes virtual DOM trees",
+  "version": "1.0.0",
+  "description": "Serializes and deserializes patch objects of virtual-dom",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Zharktas/serialize-vdom"
+    "url": "https://github.com/Zharktas/vdom-serialize"
   },
   "keywords": [
     "vdom",
@@ -20,9 +20,9 @@
   "author": "Jari Voutilainen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Zharktas/serialize-vdom/issues"
+    "url": "https://github.com/Zharktas/vdom-serialize/issues"
   },
-  "homepage": "https://github.com/Zharktas/serialize-vdom",
+  "homepage": "https://github.com/Zharktas/vdom-serialize",
   "dependencies": {
     "virtual-dom": "^2.1.1"
   }
